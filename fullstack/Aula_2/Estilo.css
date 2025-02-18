@@ -1,0 +1,38 @@
+
+/* seleção por tag */
+p{
+    color: rgb(160, 24, 213);
+    font-size: 18pt;
+
+}
+
+/* seleção por ID */
+#R6{
+    color: aqua;
+}
+
+/* seleção por Classe */
+.Tag_amarela{
+    color: rgb(229, 229, 55);
+}
+
+div p{
+    color: orange;
+}
+
+#R6:hover{
+    background-color: bisque;
+}
+
+/* Exemplos de mudança de background através do hover*/
+
+.Tag_amarela:hover{
+    background-color: rgb(255, 0, 0);
+}
+div p:hover{
+    background-color: rgb(47, 0, 255);
+}
+
+p:hover{
+    background-color: rgb(255, 0, 230);
+}
