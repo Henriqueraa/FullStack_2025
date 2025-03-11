@@ -1,0 +1,34 @@
+.flex-container{
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    height: 300px;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.flex-container div{
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    flex-grow: 1;
+}
+
+#d14{
+    order: 1;
+    flex-grow: 2;
+    align-self: center;
+}
+
+#d3{
+    order: 2;
+    flex-grow: 2;
+    align-self: flex-end;
+}
+
+#d18{
+    order: 4;
+    flex-basis: 200px;
+    align-self: flex-start;
+}
