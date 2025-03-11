@@ -1,0 +1,24 @@
+.Links:hover{
+    color: white;
+    font-size: 18px;
+}
+
+#f{
+    background-color: cadetblue;
+}
+
+.tabela{
+     background-color: white;
+}
+
+.celula{
+    text-align: center;
+}
+
+#tabelaa{
+    border: 2px solid black;
+}
+
+#Titulo{
+    font-size: 30px;
+}
