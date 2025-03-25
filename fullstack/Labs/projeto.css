@@ -3,6 +3,11 @@
     font-size: 18px;
 }
 
+.Links1:hover{
+    color: rgb(183, 0, 255);
+    font-size: 18px;
+}
+
 #f{
     background-color: cadetblue;
 }
