@@ -1,0 +1,17 @@
+#canvas{
+    background-color: white;
+}
+
+#canv{
+    display: flex;
+    justify-content: center;
+}
+
+body{
+    background-color: grey;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+}
