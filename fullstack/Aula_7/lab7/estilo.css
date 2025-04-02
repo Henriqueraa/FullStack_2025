@@ -1,17 +1,26 @@
 #canvas{
     background-color: white;
+    margin-bottom: 10px;
+}
+
+#canvas2{
+    background-color: aquamarine;
 }
 
 #canv{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 body{
-    background-color: grey;
+    background-color: rgb(253, 0, 156);
+
 }
 
 h1{
     display: flex;
     justify-content: center;
+    color: white;
 }

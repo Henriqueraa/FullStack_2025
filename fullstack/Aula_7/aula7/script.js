@@ -143,38 +143,4 @@ ctx1.fill();
 ctx1.stroke();
 ctx1.closePath();
 
-let ex2 = document.getElementById('cvs2');
-let ctx2 =  cvs2.getContext('2d');
 
-// chao
-ctx2.beginPath();
-ctx2.lineWidth = 5;
-ctx2.fillStyle = 'grey';
-ctx2.fillRect(0,270,400,200);
-ctx2.closePath();
-// casa
-ctx2.beginPath();
-ctx2.lineWidth = 5;
-ctx2.fillStyle = 'brown';
-ctx2.fillRect(160,190,80,80);
-ctx2.closePath();
-// telhado
-ctx2.beginPath();
-ctx2.lineWidth = 2;
-ctx2.fillStyle = 'orange';
-ctx2.strokeStyle = 'orange';
-ctx2.moveTo(160,190);
-ctx2.lineTo(200,150);
-ctx2.lineTo(240,190);
-ctx2.fill();
-ctx2.stroke();
-ctx2.closePath();
-
-ctx2.beginPath();
-ctx2.lineWidth = 2;
-ctx2.fillStyle = 'yellow';
-ctx2.strokeStyle = 'green';
-ctx2.arc(290,150,25,0*Math.PI,2*Math.PI);
-ctx2.fill();
-ctx2.stroke();
-ctx2.closePath();
