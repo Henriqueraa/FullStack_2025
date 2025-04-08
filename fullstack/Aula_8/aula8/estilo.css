@@ -1,0 +1,9 @@
+body{
+    background-color: rgba(255, 0, 0, 0.597);
+}
+
+#canvas1{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
