@@ -4,6 +4,9 @@ body{
 
 #canvas1{
     background-color: white;
+    border-style:inset;
+    border-radius: 2px;
+    border-color: rgb(105, 98, 98);
 }
 
 #canvas{
@@ -13,3 +16,7 @@ body{
     flex-direction: column;
 }
 
+#img{
+    width: 20px;
+    height: 20px;
+}
