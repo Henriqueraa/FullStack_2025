@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security"
+  },
+  "name": "servidor",
+  "version": "1.0.0",
+  "description": "aula 9",
+  "main": "servidor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Henriqueraa/FullStack_2025.git"
+  },
+  "author": "Henrique",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Henriqueraa/FullStack_2025/issues"
+  },
+  "homepage": "https://github.com/Henriqueraa/FullStack_2025#readme"
+}
