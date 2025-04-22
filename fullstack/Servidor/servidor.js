@@ -16,12 +16,12 @@ console.log("Servidor ligado!!".red);
 
 // métodos e actions
 
-app.get("/inicio", function(requisicao,resposta){
-    resposta.redirect("Aulas_1_e_2/Aula_1/index.html")
-})
+// app.get("/inicio", function(requisicao,resposta){
+//     resposta.redirect("Aulas_1_e_2/Aula_1/index.html")
+// })
 
-app.post("/inicio", function(requisicao,resposta){
-    resposta.redirect("Aulas_1_e_2/Aula_1/index.html")
+app.get("/", function(requisicao,resposta){
+    resposta.redirect("Aulas_1_e_2/Página pessoal/projetos.html")
 })
 
 // app.get("/cadastrar", function(requisicao,resposta){
@@ -44,4 +44,16 @@ app.post("/cadastrar", function(requisicao,resposta){
 app.get("/for_ejs", function(requisicao,resposta){
     let valor = requisicao.query.valor
     resposta.render("exemplo_for", {valor})
+})
+
+app.post("/Login",function(requisicao,resposta){
+    let Login = requisicao.body.Login
+    let Senha = requisicao.body.Senha  
+    resposta.render("resposta_lab10", {Login, Senha})
+})
+
+app.post("/Cadastra",function(requisicao,resposta){
+    let Login = requisicao.body.Login
+    let Senha = requisicao.body.Senha  
+    resposta.redirect("Aula_10/lab10/Cadastro.html")
 })

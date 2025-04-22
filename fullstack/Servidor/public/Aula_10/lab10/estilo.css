@@ -1,0 +1,14 @@
+body{
+    background-color: gray;
+}
+
+div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bt{
+    padding: 5px;
+    margin-left: 85px;
+}
