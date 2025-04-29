@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Entrada</title>
+    <title>Resposta</title>
     <link rel="stylesheet" href="Aula_10/lab10/estilo.css">
 </head>
 <body>
-    <div>
-    <h1>Dados Pessoais</h1>
-    <p>Bem Vindo <%= Login %> !</p>
-    <input type="submit" value="Notas">
-    <br>
-    <input type="submit" value="Aulas">
-    </div>
+    <% if (status == 1) { %>
+        <div>
+            <h1>Dados Pessoais</h1>
+            <p>Bem Vindo <%= login %>!</p>
+            <input type="submit" value="Notas">
+            <br>
+            <input type="submit" value="Aulas">
+        </div>
+    <% } if (status == 0) { %>
+        <div>
+            <h1>Erro ao efetuar login</h1>
+            <p><%= msg %></p>
+        </div>  
+    <% } %>    
 </body>
 </html>

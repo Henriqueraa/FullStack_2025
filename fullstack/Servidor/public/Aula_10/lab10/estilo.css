@@ -12,3 +12,11 @@ div{
     padding: 5px;
     margin-left: 85px;
 }
+
+
+#button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px; 
+}
