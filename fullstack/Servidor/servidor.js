@@ -1,4 +1,10 @@
 require("colors");
+var mongodb = require("mongodb");
+const MongoClient = mongodb.MongoClient;
+const uri = 'mongodb+srv://Henriqueraa:yBV43UWXBz0TbS8C@perfis.yqemitq.mongodb.net/?retryWrites=true&w=majority&appName=perfis';
+const client = new MongoClient(uri, { useNewUrlParser: true });
+var dbo = client.db("perfis");
+var usuario = dbo.collection("usuario");
 var http = require("http");
 var express = require("express");
 let usuarios = [];
@@ -106,3 +112,52 @@ app.post("/Cadastra", function(requisicao, resposta){
     }
 
     });
+// -----------------------------------------------------
+// lab 11
+app.post("/cadastrar",function(requisicao,resposta){
+    let Nome = requisicao.body.Nome;
+    let Login = requisicao.body.Login;
+    let Senha = requisicao.body.Senha;
+    let Nascimento = requisicao.body.Nascimento;
+    
+    console.log(Nome, Login, Senha, Nascimento);
+    
+    var data = { db_nome: Nome, db_login: Login, db_senha: Senha, db_nasc: Nascimento };
+    
+    usuario.insertOne(data, function(err){
+    if(err){
+    resposta.render("resposta", {status: "Erro", Nome, Login, Senha, Nascimento});
+    }
+    else{
+    resposta.render("resposta", {status: "Sucesso", Nome,Login,Senha,Nascimento});
+    }
+    
+    })
+    
+    })
+    
+    app.post('/logar2', function(requisicao,resposta){
+    let Login = requisicao.body.Login;
+    let Senha = requisicao.body.Senha;
+    console.log(Login, Senha);
+    
+    var data = {db_login: Login, db_senha: Senha};
+    
+    usuario.find(data).toArray(function(err, items){
+    console.log(items)
+    if(err){
+    //erro ao logar
+    resposta.render("resposta_login",{status: "erro ao logar"});
+    
+    }
+    else if(items.length == 0){
+    //não encontrou usuario
+    resposta.render("resposta_login",{status: "usuario/senha não encontrado"});
+    
+    }
+    else{
+    //usuario encontrado
+    resposta.render("resposta_login",{status: "usuario "+Login+" logado"});
+    }
+    })
+    })
