@@ -2,9 +2,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="Aula_11/lab11/estilo.css">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    
+    <div class="gerar">
+    <form action="/Postar" method="post">
+        <p>Titulo:<br> <input type="text" name="Titulo"></p>
+        <p>Resumo:<br> <input type="text" name="Resumo"></p>
+        <p>Conteudo:<br> <textarea name="Conteudo" rows="6" cols="21"></textarea></p>
+        <div id="button">
+        <input type="submit" value="Postar">
+        </div>
+    </form>
+    </div>
 </body>
 </html>

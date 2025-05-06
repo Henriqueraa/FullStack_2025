@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="Aula_11/lab11/estilo.css">
+</head>
+<body>
+    <div class="gerar"><h1>Bem vindo ao Blog!!</h1></div>
+    <form action="/Gera_post" method="get">
+    <div class="gerar"> <input type="submit" value="Criar um post"></div>
+    </form>
+    <div>
+    <% if (posts.length > 0) { %>
+        <% for (var i = 0; i < posts.length;  i++ ) { %>
+            <div id="postf">
+               <h2><%= posts[i].db_Titulo %></h2>
+               <p>Resumo: <%= posts[i].db_Resumo %></p>
+               <p>Conteudo: <%= posts[i].db_Conteudo %></p>
+            </div>
+        <% } %>
+        <% } else { %>
+            <p>Não há Posts</p>
+       <% } %> 
+    </div>
+</body>
+</html>

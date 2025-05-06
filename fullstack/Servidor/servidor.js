@@ -5,11 +5,13 @@ const uri = 'mongodb+srv://Henriqueraa:yBV43UWXBz0TbS8C@perfis.yqemitq.mongodb.n
 const client = new MongoClient(uri, { useNewUrlParser: true });
 var dbo = client.db("perfis");
 var usuario = dbo.collection("usuario");
+var posts = dbo.collection("posts");
 var http = require("http");
 var express = require("express");
 let usuarios = [];
 var app = express();
-let bodyParser = require("body-parser")
+let bodyParser = require("body-parser");
+const { TIMEOUT } = require("dns");
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -158,6 +160,39 @@ app.post("/cadastrar",function(requisicao,resposta){
     else{
     //usuario encontrado
     resposta.render("resposta_login",{status: "usuario "+Login+" logado"});
-    }
+    }   
     })
     })
+
+    app.post("/Postar", function(requisicao,resposta){
+        let Titulo = requisicao.body.Titulo
+        let Resumo = requisicao.body.Resumo
+        let Conteudo = requisicao.body.Conteudo
+        var data = {db_Titulo: Titulo,db_Resumo: Resumo,db_Conteudo: Conteudo}
+        posts.insertOne(data, function(err){   
+            if (err) {
+                resposta.render('lab11',{status: "Erro", Titulo, Resumo, Conteudo})
+            }
+              else {
+                resposta.render('lab11',{status: "sucesso", Titulo, Resumo, Conteudo})       
+            }
+            });
+    })
+
+    app.get("/Gera_post", function(requisicao,resposta){
+        resposta.redirect("Aula_11/lab11/cadastrar_post.html")
+    })
+    
+    app.get("/blog", function(requisicao,resposta){
+        posts.find().toArray(function(err, items) {
+            if (err) {
+              resposta.send("Erro ao encontrar os posts!");
+            }else {
+                console.log(items);
+              resposta.render("blog",{ posts:items})        
+            };
+          });
+      
+        });
+   
+    
