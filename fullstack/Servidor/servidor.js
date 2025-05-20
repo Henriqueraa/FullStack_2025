@@ -4,11 +4,14 @@ const MongoClient = mongodb.MongoClient;
 const uri = 'mongodb+srv://Henriqueraa:yBV43UWXBz0TbS8C@perfis.yqemitq.mongodb.net/?retryWrites=true&w=majority&appName=perfis';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 var dbo = client.db("perfis");
+var dbo2 = client.db("bd_completo");
+var usuarios = dbo2.collection("usuarios");
+var Carros = dbo2.collection("Carros");
 var usuario = dbo.collection("usuario");
 var posts = dbo.collection("posts");
 var http = require("http");
 var express = require("express");
-let usuarios = [];
+let usuarioss = [];
 var app = express();
 let bodyParser = require("body-parser");
 const { TIMEOUT } = require("dns");
@@ -92,7 +95,7 @@ app.get("/for_ejs", function(requisicao,resposta){
 app.post("/Cadastra", function(requisicao, resposta){
     let Login = requisicao.body.Login;
     let Senha = requisicao.body.Senha;
-    usuarios.push({Login, Senha});
+    usuarioss.push({Login, Senha});
     console.log("Usuário cadastrado:", {Login, Senha});
     resposta.redirect("Aula_10/Lab10/Login.html");
     });
@@ -100,7 +103,7 @@ app.post("/Cadastra", function(requisicao, resposta){
     app.post("/Login", function(requisicao, resposta) {
     let login = requisicao.body.Login;
     let senha = requisicao.body.Senha;
-    let usuario = usuarios.find(u => u.Login === login && u.Senha === senha);
+    let usuario = usuarioss.find(u => u.Login === login && u.Senha === senha);
     let msg = "Usuário ou senha incorreto, tente novamente!"
     let status;
 
@@ -194,5 +197,161 @@ app.post("/cadastrar",function(requisicao,resposta){
           });
       
         });
-   
+
+/////////////////////////////////////////////////////////////////////////
+// Usuários
+
+app.post("/cadastrar_usuario", function(req, resp) {
+
+    let data = { db_nome: req.body.nome, db_login: req.body.login, db_senha: req.body.senha };
+
+    // salva dados no banco
+    usuarios.insertOne(data, function (err) {
+      if (err) {
+        resp.render('resposta_usuario.ejs', {resposta: "Erro ao cadastrar usuário!"})
+      }
+      else {
+        resp.render('resposta_usuario.ejs', {resposta: "Usuário cadastrado com sucesso!"})        
+      };
+    });
+
+});
+
+
+app.post("/logar_usuario", function(req, resp) {
+
+    let data = {db_login: req.body.login, db_senha: req.body.senha };
+
+    // busca um usuário no banco de dados
+    usuarios.find(data).toArray(function(err, items) {
+        console.log(items);
+        if (items.length == 0) {
+          resp.render('resposta_usuario.ejs', {resposta: "Usuário/senha não encontrado!"})
+        }
+        else if (err) {
+          resp.render('resposta_usuario.ejs', {resposta: "Erro ao logar usuário!"})
+        }
+        else {
+          Carros.find().toArray(function(err, items) {
+          resp.render("lista_carros",{Carros:items});
+          })
+        };
+    })
+})
+
+app.post("/cadastrar_carro", function(req, resp) {
+
+    let data = { db_marca: req.body.marca, db_modelo: req.body.modelo, db_ano: req.body.ano, db_qnt: req.body.qnt };
+
+    // salva dados no banco
+    Carros.insertOne(data, function (err, items) {
+      if (err) {
+        resp.render('resposta_carro.ejs', {resposta: "Erro ao cadastrar o Carro!"})
+      }
+      else {
+      Carros.find().toArray(function(err, items) {
+      resp.render("lista_carros",{Carros:items})
+      });        
+      }
+    });
+
+});
+
+app.post("/remover_carro", function(req, resp) {
+
+    let data = { db_marca: req.body.marca, db_modelo: req.body.modelo, db_ano: req.body.ano};
+
+    // remoção do anuncio do carro
+    Carros.deleteOne(data, function (err, result) {
+        console.log(result);
+        if (result.deletedCount == 0) {
+          resp.render('resposta_carro.ejs', {resposta: "Carro não encontrado!"})
+        }
+        else if (err) {
+          resp.render('resposta_carro.ejs', {resposta: "Erro ao remover o Carro!"})
+        }
+        else {
+          Carros.find().toArray(function(err, items) {
+          resp.render("lista_carros",{Carros:items})
+        })
+        }
+      });
+});
+
+app.post("/atualizar_carro", function(req, resp) {
+
+    let data = { db_marca: req.body.marca, db_modelo: req.body.modelo, db_ano: req.body.ano, db_qnt: req.body.qnt };
+    let newData = { $set: {db_marca: req.body.newmarca, db_modelo: req.body.newmodelo, db_ano: req.body.newano, db_qnt: req.body.newqnt} };
+
+    // atualiza o anuncio do carro
+    Carros.updateOne(data, newData, function (err, result) {
+          console.log(result);
+          if (result.modifiedCount == 0) {
+            resp.render('resposta_carro.ejs', {resposta: "Carro não encontrado!"})
+          }
+          else if (err) {
+            resp.render('resposta_carro.ejs', {resposta: "Erro ao atualizar o Carro!"})
+          }
+          else {
+          Carros.find().toArray(function(err, items) {
+          resp.render("lista_carros",{Carros:items})
+        })
+        }
+      });
+});
+;
+app.post("/vender_carro", function(req, resp) {
+  const marca = req.body.marca;
+  const modelo = req.body.modelo;
+  const ano = req.body.ano;
+
+  const filtro = { db_marca: marca, db_modelo: modelo, db_ano: ano };
+
+  Carros.findOne(filtro, function(err, carro) {
+    if (err || !carro) {
+      return resp.render('resposta_carro.ejs', {resposta: "Carro não encontrado!"});
+    }
+
+    const qntAtual = parseInt(carro.db_qnt);
+
+    if (qntAtual <= 0) {
+      return resp.render('resposta_carro.ejs', {resposta: "Carro esgotado!"});
+    }
+
+    if (qntAtual === 1) {
+      // Remove o carro do banco
+      Carros.deleteOne(filtro, function(err, result) {
+        if (err || result.deletedCount === 0) {
+          return resp.render('resposta_carro.ejs', {resposta: "Erro ao remover carro esgotado!"});
+        }
+
+        Carros.find().toArray(function(err, items) {
+          resp.render('lista_carros.ejs', {Carros: items, mensagem: "Carro vendido! Estoque esgotado, anúncio removido."});
+        });
+      });
+    } else {
+      // Apenas decrementa a quantidade
+      const novaQnt = qntAtual - 1;
+
+      Carros.updateOne(filtro, { $set: { db_qnt: novaQnt } }, function(err, result) {
+        if (err || result.modifiedCount === 0) {
+          return resp.render('resposta_carro.ejs', {resposta: "Erro ao vender o carro!"});
+        }
+
+        Carros.find().toArray(function(err, items) {
+          resp.render('lista_carros.ejs', {Carros: items, mensagem: "Carro vendido com sucesso!"});
+        });
+      });
+    }
+  });
+});
+
+
+app.get("/listar_carros", function(req, resp) {
+
+    usuarios.find().toArray(function(err, items) {
+        resp.render("lista_carros.ejs", {Carros:items});
+      });
+
+});
     
